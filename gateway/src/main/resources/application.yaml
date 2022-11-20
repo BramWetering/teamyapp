@@ -1,0 +1,26 @@
+
+server:
+  port: 5000
+
+spring:
+  application:
+    title: Application gateway
+    version: 1.0
+    name: gateway
+
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+
+      routes:
+        - id: user-service
+          uri: http://user-service:5011
+          predicates:
+            - Path=/user/**
+          filters:
+            - RewritePath=/user/(?<segment>.*), /v1.0/invoke/user-service/method/$\{segment}
