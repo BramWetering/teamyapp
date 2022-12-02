@@ -61,6 +61,13 @@ jobs:
           push: true
           tags: bram2709/teamapp:user-service
 
+      - name: Build and push gateway
+        uses: docker/build-push-action@v2
+        with:
+          context: gateway
+          push: true
+          tags: bram2709/teamapp:gateway
+
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v1
 #        with:
