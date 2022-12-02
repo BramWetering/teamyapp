@@ -57,7 +57,7 @@ jobs:
         with:
           context: services/user-service
           push: true
-          tags: user/app:latest
+          tags: ${{ env.USER_TAG_PUSH }}
 
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v1
