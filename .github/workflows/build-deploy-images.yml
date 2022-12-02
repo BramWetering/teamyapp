@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      contents: read
     name: Builds and pushes images
 
     steps:
