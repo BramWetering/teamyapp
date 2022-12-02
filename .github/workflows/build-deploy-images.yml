@@ -39,7 +39,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: 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
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - run: mvn clean package
 
