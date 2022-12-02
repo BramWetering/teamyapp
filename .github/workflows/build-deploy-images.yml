@@ -19,6 +19,8 @@ jobs:
   build_push_images:
 
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     name: Builds and pushes images
 
     steps:
