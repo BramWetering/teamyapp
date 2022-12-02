@@ -32,3 +32,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://login.microsoftonline.com/3b94b4c6-59a7-4d4f-b594-532eadaff784/discovery/v2.0/keys
+          issuer-uri: https://login.microsoftonline.com/3b94b4c6-59a7-4d4f-b594-532eadaff784/v2.0
+          audiences: 82b5a9e1-eaa2-4ee8-a3a0-7d3c41a4a1b5

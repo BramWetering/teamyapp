@@ -38,17 +38,6 @@ jobs:
         restore-keys: ${{ runner.os}}-m2-
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    
-#     - name: Login to GitHub Container Registry
-#       uses: docker/login-action@v1
-#       with:
-#         registry: ${{ env.REGISTRY }}
-#         username: ${{ github.actor }}
-#         password: ${{ secrets.GITHUB_TOKEN }}
-#     - name: Pull user service image
-#       run: docker pull ghcr.io/vitaquest/user-service:latest
-#     - name: Pull activity service
-#       run: docker pull ghcr.io/vitaquest/activity-service:latest
 
     
     - name: Build and run docker compose stack
