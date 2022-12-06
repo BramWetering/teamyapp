@@ -68,20 +68,20 @@ spec:
 #      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
 #        - name: dockerconfigjson-github-com
 ---
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myapp-ingress # Name of the service
-spec:
-  rules:
-    - host: myapp.comm
-      http:
-        paths:
-          - paths:
-              backend:
-                serviceName: userservice-service
-                servicePort: 5001
+#
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: myapp-ingress # Name of the service
+#spec:
+#  rules:
+#    - host: myapp.comm
+#      http:
+#        paths:
+#          - paths:
+#              backend:
+#                serviceName: userservice-service
+#                servicePort: 5001
 
 
 ---
