@@ -67,6 +67,22 @@ spec:
 #                  key: USER_DBNAME
 #      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
 #        - name: dockerconfigjson-github-com
+---
+
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: ms-one-ingress # Name of the service
+spec:
+  rules:
+    - host: userservice-service.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: userservice-service
+              servicePort: 5001
+
 
 ---
 
@@ -97,6 +113,6 @@ spec:
   ports:
     - name: default
       port: 5001 # Port that we want to reach the service running on the pods on
-      targetPort: 5000 # Port that the running service exposes within the container
+      targetPort: 5001 # Port that the running service exposes within the container
   type: ClusterIP
 
