@@ -101,6 +101,10 @@ jobs:
 
       - name: save config cluster
         run: doctl kubernetes cluster kubeconfig save 20a83062-7a79-49bb-8da6-99a040ad09f3
+
+      - name: Deploy
+        run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v1
 #        with:
