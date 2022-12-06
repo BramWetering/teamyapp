@@ -69,17 +69,16 @@ spec:
 #        - name: dockerconfigjson-github-com
 ---
 
-apiVersion: v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: ms-one-ingress # Name of the service
+  name: myapp-ingress # Name of the service
 spec:
   rules:
-    - host: userservice-service.com
+    - host: myapp.comm
       http:
         paths:
-          - path: /
-            backend:
+          - paths:
               serviceName: userservice-service
               servicePort: 5001
 
