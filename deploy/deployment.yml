@@ -79,8 +79,9 @@ spec:
       http:
         paths:
           - paths:
-              serviceName: userservice-service
-              servicePort: 5001
+              backend:
+                serviceName: userservice-service
+                servicePort: 5001
 
 
 ---
