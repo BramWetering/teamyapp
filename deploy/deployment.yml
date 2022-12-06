@@ -100,7 +100,7 @@ spec:
     - name: default
       port: 80 # Port that we want to reach the service running on the pods on
       targetPort: 5000 # Port that the running service exposes within the container
-
+      nodePort: 30000
 ---
 
 apiVersion: v1
@@ -112,7 +112,7 @@ spec:
     app: userservice-pod # Send traffic to pods with this label
   ports:
     - name: default
-      port: 80 # Port that we want to reach the service running on the pods on
+      port: 5001 # Port that we want to reach the service running on the pods on
       targetPort: 5001 # Port that the running service exposes within the container
   type: ClusterIP
 
