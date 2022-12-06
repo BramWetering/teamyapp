@@ -68,8 +68,21 @@ jobs:
           push: true
           tags: bram2709/teamapp:gateway
 
-      - name: build and push to digitalocean
-        run: docker push registry.digitalocean.com/deploy-container/teamapp:gateway
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+      - name: Log in to DO Container Registry
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Tag image
+        run:
+          docker tag teamapp/gateway \
+          registry.digitalocean.com/deploy-container/gateway:latest
+
+      - name: Push to digitalocean
+        run: docker push registry.digitalocean.com/deploy-container/gateway:latest
 
 
   deploy:
