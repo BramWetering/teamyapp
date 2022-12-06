@@ -108,11 +108,11 @@ kind: Service
 metadata:
   name: userservice-service # Name of the service
 spec:
+  type: NodePort
   selector:
     app: userservice-pod # Send traffic to pods with this label
   ports:
-    - name: default
+    - protocol: TCP
       port: 5001 # Port that we want to reach the service running on the pods on
       targetPort: 5001 # Port that the running service exposes within the container
-  type: ClusterIP
-
+      nodePort: 31000
