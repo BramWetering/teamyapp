@@ -67,3 +67,34 @@ spec:
 #                  key: USER_DBNAME
 #      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
 #        - name: dockerconfigjson-github-com
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service # Name of the service
+spec:
+  type: LoadBalancer
+  selector:
+    app: gateway-pod # Send traffic to pods with this label
+  ports:
+    - name: default
+      port: 80 # Port that we want to reach the service running on the pods on
+      targetPort: 5000 # Port that the running service exposes within the container
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservice-service # Name of the service
+spec:
+  selector:
+    app: userservice-pod # Send traffic to pods with this label
+  ports:
+    - name: default
+      port: 5001 # Port that we want to reach the service running on the pods on
+      targetPort: 5001 # Port that the running service exposes within the container
+  type: ClusterIP
+
