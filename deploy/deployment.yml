@@ -27,3 +27,43 @@ spec:
 #              value: production
 #      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
 #        - name: dockerconfigjson-github-com
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment # Name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservice-pod # The deployment will target pods with this name
+  template:
+    metadata:
+      labels:
+        app: userservice-pod # Name of the pods
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "user-service"
+        dapr.io/app-port: "5001"
+    spec:
+      containers:
+        - name: userservice-container # Name we want to give the container
+          image: docker.io/bram2709/teamapp:user-service # Remote Docker image
+          ports:
+            - containerPort: 5001 # Expose the port that the service/app runs on
+          imagePullPolicy: Always
+#          env:
+#            - name: CONNECTION_STRING
+#              valueFrom:
+#                secretKeyRef:
+#                  name: env-vars
+#                  key: CONNECTION_STRING
+#            - name: DB_NAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: env-vars
+#                  key: USER_DBNAME
+#      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
+#        - name: dockerconfigjson-github-com
