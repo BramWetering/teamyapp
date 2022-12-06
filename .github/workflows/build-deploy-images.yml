@@ -68,6 +68,9 @@ jobs:
           push: true
           tags: bram2709/teamapp:gateway
 
+      - name: build and push to digitalocean
+        run: docker push registry.digitalocean.com/deploy-container/teamapp:gateway
+
 
   deploy:
 

@@ -1,0 +1,29 @@
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: gateway-deployment # Name of the deployment
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: gateway-pod # The deployment will target pods with this name
+#  template:
+#    metadata:
+#      labels:
+#        app: gateway-pod # Name of the pods
+#      annotations:
+#        dapr.io/enabled: "true"
+#        dapr.io/app-id: "gateway"
+#        dapr.io/app-port: "5000"
+#    spec:
+#      containers:
+#        - name: gateway-container # Name we want to give the container
+#          image: docker.io/bram2709/teamapp:gateway # Remote Docker image
+#          ports:
+#            - containerPort: 5000 # Expose the port that the service/app runs on
+#          imagePullPolicy: Always
+#          env:
+#            - name: spring_profiles_active
+#              value: production
+#      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
+#        - name: dockerconfigjson-github-com
