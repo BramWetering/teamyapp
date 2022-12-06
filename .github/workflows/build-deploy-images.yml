@@ -68,19 +68,19 @@ jobs:
           push: true
           tags: bram2709/teamapp:gateway
 
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
-
-      - name: Log in to DO Container Registry
-        run: doctl registry login --expiry-seconds 600
-
-      - name: Tag image
-        run: docker tag gateway registry.digitalocean.com/deploy-container/gateway
-
-      - name: Push to digitalocean
-        run: docker push registry.digitalocean.com/deploy-container/gateway
+#      - name: Install doctl
+#        uses: digitalocean/action-doctl@v2
+#        with:
+#          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+#
+#      - name: Log in to DO Container Registry
+#        run: doctl registry login --expiry-seconds 600
+#
+#      - name: Tag image
+#        run: docker tag gateway registry.digitalocean.com/deploy-container/gateway
+#
+#      - name: Push to digitalocean
+#        run: docker push registry.digitalocean.com/deploy-container/gateway
 
   deploy:
 
@@ -99,7 +99,8 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_TOKEN }}
 
-
+      - name: save config cluster
+        run: doctl kubernetes cluster kubeconfig save 20a83062-7a79-49bb-8da6-99a040ad09f3
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v1
 #        with:
