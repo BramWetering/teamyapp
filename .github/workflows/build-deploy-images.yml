@@ -76,11 +76,6 @@ jobs:
       - name: Log in to DO Container Registry
         run: doctl registry login --expiry-seconds 600
 
-      - name: Tag image
-        run:
-          docker tag teamapp/gateway \
-          registry.digitalocean.com/deploy-container/gateway:latest
-
       - name: Push to digitalocean
         run: docker push registry.digitalocean.com/deploy-container/gateway:latest
 
