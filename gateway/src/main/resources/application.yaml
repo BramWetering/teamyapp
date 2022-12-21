@@ -24,3 +24,9 @@ spring:
             - Path=/user/**
           filters:
             - RewritePath=/user/(?<segment>.*), /v1.0/invoke/user-service/method/$\{segment}
+        - id: message-service
+          uri: http://message-service:5012
+          predicates:
+            - Path=/message/**
+          filters:
+            - RewritePath=/message/(?<segment>.*), /v1.0/invoke/message-service/method/$\{segment}

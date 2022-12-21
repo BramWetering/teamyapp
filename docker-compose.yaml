@@ -47,6 +47,23 @@ services:
     env_file:
       - .env
 
+  message-service:
+    build: services/message-service
+    hostname: user-service
+    restart: always
+    ports:
+      - "5002:5002"
+      - "50002:50002"
+    depends_on:
+      - rabbitmq
+      - placement
+    volumes:
+      - .message-volume:/message-service
+    networks:
+      - local-dev
+    env_file:
+      - .env
+
   user-service-dapr:
     image: "daprio/daprd:edge"
     command: [
@@ -63,6 +80,23 @@ services:
     depends_on:
       - user-service
     network_mode: "service:user-service"
+
+  message-service-dapr:
+    image: "daprio/daprd:edge"
+    command: [
+      "./daprd",
+      "-app-id", "message-service",
+      "-app-port", "5002",
+      "--dapr-http-port", "5012",
+      "-placement-host-address", "placement:50006",
+      "-components-path", "/components",
+      "--enable-api-logging"
+    ]
+    volumes:
+      - "./dapr-components/:/components"
+    depends_on:
+      - message-service
+    network_mode: "service:message-service"
 
   placement:
     image: "daprio/dapr"
