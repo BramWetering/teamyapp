@@ -19,7 +19,6 @@ services:
       "./daprd",
       "-app-id", "gateway",
       "-app-port", "5000",
-      "--dapr-http-port", "5010",
       "-placement-host-address", "placement:50006",
       "-components-path", "/components",
       "--enable-api-logging"
@@ -70,7 +69,6 @@ services:
         "./daprd",
         "-app-id", "user-service",
         "-app-port", "5001",
-        "--dapr-http-port", "5011",
         "-placement-host-address", "placement:50006",
         "-components-path", "/components",
         "--enable-api-logging"
@@ -87,7 +85,6 @@ services:
       "./daprd",
       "-app-id", "message-service",
       "-app-port", "5002",
-      "--dapr-http-port", "5012",
       "-placement-host-address", "placement:50006",
       "-components-path", "/components",
       "--enable-api-logging"
