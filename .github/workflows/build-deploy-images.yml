@@ -100,7 +100,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_TOKEN }}
 
       - name: save config cluster
-        run: doctl kubernetes cluster kubeconfig save 20a83062-7a79-49bb-8da6-99a040ad09f3
+        run: doctl kubernetes cluster kubeconfig save a403cfef-b056-418b-bf45-969aea78f713
 
       - name: Deploy
         run: kubectl apply -f deploy/deployment.yml
