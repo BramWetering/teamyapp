@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - ci/cd
 jobs:
   build:
     runs-on: ubuntu-16.04
