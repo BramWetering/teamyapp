@@ -1,25 +1,9 @@
 application:
-  title: User Service
+  title: Message Service
   version: 1.0
 
 server:
-  port: 5001
-#  data:
-#    mongodb:
-#      authentication-database: admin
-#      username: rootuser
-#      password: rootpass
-#      database: user
-#      port: 27017
-#      host: localhost
-
-#      spring.data.mongodb.authentication-dsatabase=admin
-#      spring.data.mongodb.username=rootuser
-#      spring.data.mongodb.password=rootpass
-#      spring.data.mongodb.database=user
-#      spring.data.mongodb.port=27017
-#      spring.data.mongodb.host=localhost
-#      server.port=5001
+  port: 5002
 
 spring:
   jpa:
@@ -40,10 +24,8 @@ spring:
           jwk-set-uri: https://login.microsoftonline.com/3b94b4c6-59a7-4d4f-b594-532eadaff784/discovery/v2.0/keys
           issuer-uri: https://login.microsoftonline.com/3b94b4c6-59a7-4d4f-b594-532eadaff784/v2.0
           audiences: 82b5a9e1-eaa2-4ee8-a3a0-7d3c41a4a1b5
-
   data:
     mongodb:
       uri: mongodb+srv://root:3okKI5iGkWoznG7W@cluster0.tcj1n9o.mongodb.net/?retryWrites=true&w=majority
-      database: users
+      database: messages
       auto-index-creation: true
-#3okKI5iGkWoznG7W

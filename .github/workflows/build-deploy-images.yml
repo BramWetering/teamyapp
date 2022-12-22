@@ -4,7 +4,7 @@ name: 'Build & deploy images'
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ci/cd ]
 
 #  workflow_dispatch:
 
@@ -15,8 +15,13 @@ env:
   GATEWAY_TAG_PUSH: ghcr.io/teamyapp/gateway:${{ github.sha }}
 
 jobs:
+
   build_push_images:
+
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     name: Builds and pushes images
 
     steps:
@@ -31,25 +36,94 @@ jobs:
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to GitHub Container Registry
+
+#      - name: Publish to Github Packages
+#        uses: docker/build-push-action@v1
+#        with:
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#          registry: docker.pkg.github.com
+#          repository: ${{ github.repository }}/next
+#          tags: latest, ${{ github.run_number }}
+
+      - name: Login to Dockerhub
         uses: docker/login-action@v1
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - run: mvn clean package
 
-      - name: Build & push gateway
-        uses: docker/build-push-action@v2
-        with:
-          context: gateway
-          push: true
-          tags: ${{ env.GATEWAY_TAG_PUSH }}
-
-      - name: Build & push user
+      - name: Build and push user
         uses: docker/build-push-action@v2
         with:
           context: services/user-service
           push: true
-          tags: ${{ env.USER_TAG_PUSH }}
+          tags: bram2709/teamapp:user-service
+
+      - name: Build and push gateway
+        uses: docker/build-push-action@v2
+        with:
+          context: gateway
+          push: true
+          tags: bram2709/teamapp:gateway
+
+#      - name: Install doctl
+#        uses: digitalocean/action-doctl@v2
+#        with:
+#          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+#
+#      - name: Log in to DO Container Registry
+#        run: doctl registry login --expiry-seconds 600
+#
+#      - name: Tag image
+#        run: docker tag gateway registry.digitalocean.com/deploy-container/gateway
+#
+#      - name: Push to digitalocean
+#        run: docker push registry.digitalocean.com/deploy-container/gateway
+
+  deploy:
+
+    needs: build_push_images
+
+    runs-on: ubuntu-latest
+
+    name: Deploy images to Digital ocean
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+      - name: save config cluster
+        run: doctl kubernetes cluster kubeconfig save a403cfef-b056-418b-bf45-969aea78f713
+
+      - name: Deploy
+        run: kubectl apply -f deploy/deployment.yml
+
+#      - name: Login to GitHub Container Registry
+#        uses: docker/login-action@v1
+#        with:
+#          registry: ${{ env.REGISTRY }}
+#          username: ${{ github.repository_owner }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#
+
+##
+##      - name: Build & push gateway
+##        uses: docker/build-push-action@v2
+##        with:
+##          context: gateway
+##          push: true
+##          tags: ${{ env.GATEWAY_TAG_PUSH }}
+#
+#      - name: Build & push user
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: services/user-service
+#          push: true
+#          tags: ghcr.io/teamyapp/user-service:${{ github.sha }}
