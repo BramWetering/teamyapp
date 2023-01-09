@@ -63,4 +63,12 @@ public class UserController {
         //Authentication authContext = SecurityContextHolder.getContext().getAuthentication();
         //return service.isFirstLogin(authContext);
     }
+
+    @ApiOperation(value = "Get User by ID")
+    @GetMapping(value = "/{userId}")
+    public @ResponseBody User getUserByID(@PathVariable String userId) {
+        return service.getUserById(userId);
+    }
+
+
 }

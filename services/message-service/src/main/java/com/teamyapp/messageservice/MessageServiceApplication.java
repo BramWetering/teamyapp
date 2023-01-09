@@ -1,14 +1,14 @@
-package com.teamyapp.userservice;
+package com.teamyapp.messageservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-public class UserServiceApplication {
+@EnableMongoRepositories
+public class MessageServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserServiceApplication.class, args);
+		SpringApplication.run(MessageServiceApplication.class, args);
 	}
-
 }

@@ -19,8 +19,14 @@ spring:
 
       routes:
         - id: user-service
-          uri: http://user-service:5011
+          uri: http://localhost:3500
           predicates:
             - Path=/user/**
           filters:
             - RewritePath=/user/(?<segment>.*), /v1.0/invoke/user-service/method/$\{segment}
+        - id: message-service
+          uri: http://localhost:3500
+          predicates:
+            - Path=/message/**
+          filters:
+            - RewritePath=/message/(?<segment>.*), /v1.0/invoke/message-service/method/$\{segment}
