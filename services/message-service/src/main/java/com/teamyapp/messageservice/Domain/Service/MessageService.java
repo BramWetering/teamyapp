@@ -36,4 +36,8 @@ public class MessageService {
         messages.add(message);
         return message;
     }
+
+    public List<Message> getAllMessages() {
+        return repository.findAll();
+    }
 }

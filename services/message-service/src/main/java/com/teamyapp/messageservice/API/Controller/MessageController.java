@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(tags = "Message Controller")
 @RestController
 @CrossOrigin(origins = "*")
@@ -28,6 +30,13 @@ public class MessageController {
     @GetMapping(value = "/")
     public String getUser() {
         return "test";
+    }
+
+
+    @ApiOperation(value = "Get all messages")
+    @GetMapping(value = "/all")
+    public List<Message> getAllMessages(){
+        return this.service.getAllMessages();
     }
 
     @ApiOperation(value = "Post new message")

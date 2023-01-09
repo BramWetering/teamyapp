@@ -19,7 +19,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User {
 
     @Id
     private String id;
@@ -27,42 +27,13 @@ public class User implements UserDetails {
     @Indexed(unique = true)
     @NonNull
     private String name;
+
     @Indexed(unique = true)
     @NonNull
     private String email;
-    @JsonIgnore
+
     @NonNull
     private String password;
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-
-        return Collections.EMPTY_LIST;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 
 }
