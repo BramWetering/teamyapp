@@ -57,6 +57,7 @@ jobs:
 
   kubescape:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v3
       - uses: kubescape/github-action@main
