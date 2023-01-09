@@ -35,8 +35,18 @@ public class UserService {
     }
 
     public User getUserById(String userId) {
-        return repository.findById(userId).orElse(null);
+
+        Optional<User> foundUser = repository.findById(userId);
+        if(foundUser.isEmpty())
+        {
+            //exception
+        }
+        User user = foundUser.get();
+
+        return user;
     }
+
+
 
     public User getUserInfo(Authentication authContext) throws IllegalAccessException {
         Map<?, ?> claims = (Map<?, ?>) FieldUtils.readField(authContext.getPrincipal(), "claims", true);

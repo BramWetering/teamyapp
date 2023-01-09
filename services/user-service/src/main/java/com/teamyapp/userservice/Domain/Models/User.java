@@ -27,10 +27,11 @@ public class User {
     @Indexed(unique = true)
     @NonNull
     private String name;
+
     @Indexed(unique = true)
     @NonNull
     private String email;
-    @JsonIgnore
+
     @NonNull
     private String password;
 

@@ -44,7 +44,6 @@ public class UserServiceApplicationTests {
     @BeforeEach
     public void userData() {
 
-
         user1 = new User();
         user1.setName("Test Name");
         user1.setEmail("Test Email");
@@ -54,8 +53,6 @@ public class UserServiceApplicationTests {
         user2.setName("Test2 Name");
         user2.setEmail("Test2 Email");
         user2.setPassword("Test2 PW");
-
-
 
     }
 

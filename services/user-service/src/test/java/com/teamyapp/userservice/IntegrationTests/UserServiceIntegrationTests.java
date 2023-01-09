@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
@@ -45,6 +45,7 @@ public class UserServiceIntegrationTests {
     @BeforeEach
     public void userData() {
         user1 = new User();
+        user1.setId("1");
         user1.setName("Test Name");
         user1.setEmail("Test Email");
         user1.setPassword("Test PW");
@@ -64,11 +65,11 @@ public class UserServiceIntegrationTests {
         roles.add("Role.Admins");
 
         when(userService.getAllUsers())
-                .thenReturn(List.of());
+                .thenReturn(List.of(user1));
         mvc
-                .perform(get("/all").with(jwt().jwt(jwt -> jwt.claim("roles", roles))))
+                .perform(get("/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2));
+                .andExpect(jsonPath("$.size()").value(1));
 
 //        //Arrange
 //        Integer userCount = userRepository.findAll().size();
@@ -77,6 +78,21 @@ public class UserServiceIntegrationTests {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/all"))
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$", hasSize(userCount)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void getUserById() throws Exception {
+        when(userService
+                .getUserById(user1.getId()))
+                .thenReturn(user1);
+        mvc.perform(get("/" + user1.getId()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Test Name"))
+                .andExpect(jsonPath("$.email").value("Test Email"))
+                .andExpect(jsonPath("$.password").value("Test PW"));
+
     }
 
 }
