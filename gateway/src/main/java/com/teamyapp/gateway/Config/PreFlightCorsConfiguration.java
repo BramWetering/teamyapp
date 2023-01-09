@@ -16,7 +16,7 @@ public class PreFlightCorsConfiguration {
         return new CorsWebFilter(corsConfigurationSource());
     }
 
-    
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
