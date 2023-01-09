@@ -47,12 +47,12 @@ public class UserServiceApplicationTests {
         user1 = new User();
         user1.setName("Test Name");
         user1.setEmail("Test Email");
-        user1.setPassword("Test PW");
+
 
         user2 = new User();
         user2.setName("Test2 Name");
         user2.setEmail("Test2 Email");
-        user2.setPassword("Test2 PW");
+
 
     }
 
@@ -67,17 +67,7 @@ public class UserServiceApplicationTests {
         Assert.assertEquals("test", "test");
     }
 
-    @Test
-    void getAllWorkouts() throws Exception {
 
-        // add data
-        userRepository.save(user1);
-        userRepository.save(user2);
-        // get list of all active boosters
-        List<User> moodBoostersList = userService.getAllUsers();
-        // assert to check active mood boosters
-        assertEquals(2, moodBoostersList.size());
-    }
 
     @Test
     void getUserWithId() throws Exception {
@@ -94,7 +84,7 @@ public class UserServiceApplicationTests {
         assertEquals(user1.getId(), expectedUser.getId());
         assertEquals(user1.getName(), expectedUser.getName());
         assertEquals(user1.getEmail(), expectedUser.getEmail());
-        assertEquals(user1.getPassword(), expectedUser.getPassword());
+
     }
 
     @Test

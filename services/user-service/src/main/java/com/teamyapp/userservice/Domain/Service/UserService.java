@@ -2,6 +2,7 @@ package com.teamyapp.userservice.Domain.Service;
 
 import com.teamyapp.userservice.Database.Repository.IUserRepository;
 
+import com.teamyapp.userservice.Domain.DTO.ChangeUsernameDto;
 import com.teamyapp.userservice.Domain.DTO.NewUserDTO;
 import com.teamyapp.userservice.Domain.Models.User;
 import io.dapr.client.DaprClient;
@@ -56,7 +57,7 @@ public class UserService {
     public User PostUser(){
         //Map<?, ?> claims = (Map<?, ?>) FieldUtils.readField(authContext.getPrincipal(), "claims", true);
 
-        User user = new User("48384298345","Test User", "Username", "password");
+        User user = new User("48384298345","Test User", "Username");
         user = repository.save(user);
         NewUserDTO dto = new NewUserDTO();
         dto.setId(user.getId());
@@ -70,7 +71,7 @@ public class UserService {
         if(exists) {
             return false;
         } else {
-            User user = new User((String) claims.get("oid"), (String) claims.get("name"), (String) claims.get("preferred_username"), "10");
+            User user = new User((String) claims.get("oid"), (String) claims.get("name"), (String) claims.get("preferred_username"));
             user = repository.save(user);
             NewUserDTO dto = new NewUserDTO();
             dto.setId(user.getId());
@@ -80,6 +81,39 @@ public class UserService {
 
         }
         return true;
+    }
+
+    public User changeUserName(ChangeUsernameDto dto, Authentication authContext) throws Exception {
+        Map<?, ?> claims = (Map<?, ?>) FieldUtils.readField(authContext.getPrincipal(), "claims", true);
+        String userId = claims.get("oid").toString();
+
+
+        Optional<User> lookupUser = repository.findById(userId);
+        if (lookupUser.isPresent()) {
+            User user = lookupUser.get();
+            user.setName(dto.getName());
+
+            ChangeUsernameDto tosend = new ChangeUsernameDto();
+            tosend.setName(dto.getName());
+            tosend.setId(dto.getId());
+            DaprClient client = new DaprClientBuilder().build();
+            client.publishEvent("pubsub", "changeUsername", tosend).block();
+            return repository.save(user);
+        } else {
+            throw new Exception("User not found");
+        }
+    }
+
+    public User addUser(NewUserDTO dto, Authentication authContext) throws IllegalAccessException {
+        Map<?, ?> claims = (Map<?, ?>) FieldUtils.readField(authContext.getPrincipal(), "claims", true);
+        String userId = claims.get("oid").toString();
+        User newuser = User.builder()
+                .id(userId)
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .build();
+        return repository.save(newuser);
+
     }
 
 }

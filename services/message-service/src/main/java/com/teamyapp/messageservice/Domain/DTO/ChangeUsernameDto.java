@@ -1,4 +1,4 @@
-package com.teamyapp.userservice.Domain.DTO;
+package com.teamyapp.messageservice.Domain.DTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewUserDTO {
+public class ChangeUsernameDto {
+
     private String id;
     private String name;
-    private String email;
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewUserDTO {
+public class ChangeUsernameDto {
+
     private String id;
     private String name;
-    private String email;
 }
