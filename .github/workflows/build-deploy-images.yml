@@ -4,7 +4,7 @@ name: 'Build & deploy images'
 
 on:
   push:
-    branches: [ main, ci/cd ]
+    branches: [ main, ci/cd, dev ]
 
 #  workflow_dispatch:
 
