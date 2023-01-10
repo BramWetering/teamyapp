@@ -6,6 +6,7 @@ import com.teamyapp.userservice.Domain.Service.UserService;
 import com.teamyapp.userservice.Domain.Models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Api(tags = "User Controller")
 @RestController
+@Slf4j
 @CrossOrigin(origins = "*")
 @PreAuthorize("hasAuthority('SCOPE_User.All')")
 public class UserController {
@@ -42,7 +44,7 @@ public class UserController {
     @ApiOperation(value = "Get all users")
     @GetMapping(value = "/all")
     public List<User> getAllUsers() {
-
+        log.info("Gets all users");
         return this.service.getAllUsers();
     }
 

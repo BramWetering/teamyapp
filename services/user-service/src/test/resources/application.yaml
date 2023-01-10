@@ -52,4 +52,4 @@ spring:
 mongodb.encrypt:
   keys:
     - version: 1
-      key: hqHKBLV83LpCqzKpf8OvutbCs+O5wX5BPu3btWpEvXA=
+      key: 43523452345735463563634564356342

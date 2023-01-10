@@ -1,10 +1,12 @@
 package com.teamyapp.userservice.Domain.Models;
 
+import com.bol.secure.Encrypted;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,6 +32,7 @@ public class User {
 
     @Indexed(unique = true)
     @NonNull
+    @Encrypted
     private String email;
 
 

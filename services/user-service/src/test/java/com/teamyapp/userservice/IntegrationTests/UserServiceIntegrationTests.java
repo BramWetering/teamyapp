@@ -53,7 +53,6 @@ public class UserServiceIntegrationTests {
         user2 = new User();
         user2.setName("Test2 Name");
         user2.setEmail("Test2 Email");
-
     }
 
 
@@ -71,13 +70,6 @@ public class UserServiceIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1));
 
-//        //Arrange
-//        Integer userCount = userRepository.findAll().size();
-//
-//        //Act/Assert
-//        mockMvc.perform(MockMvcRequestBuilders.get("/all"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(userCount)));
     }
 
     @Test

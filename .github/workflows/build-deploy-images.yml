@@ -12,6 +12,7 @@ on:
 env:
   REGISTRY: ghcr.io
   USER_TAG_PUSH: ghcr.io/teamyapp/user-service:${{ github.sha }}
+  MESSAGE_TAG_PUSH: ghcr.io/teamyapp/message-service:${{ github.sha }}
   GATEWAY_TAG_PUSH: ghcr.io/teamyapp/gateway:${{ github.sha }}
 
 jobs:
@@ -67,6 +68,13 @@ jobs:
           context: gateway
           push: true
           tags: bram2709/teamapp:gateway
+
+      - name: Build and push user
+        uses: docker/build-push-action@v2
+        with:
+          context: services/message-service
+          push: true
+          tags: bram2709/teamapp:message-service
 
 #      - name: Install doctl
 #        uses: digitalocean/action-doctl@v2
