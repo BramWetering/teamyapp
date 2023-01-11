@@ -83,7 +83,6 @@ public class UserController {
 
         User user = service.changeUserName(dto, authContext);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
-
     }
 
     @ApiOperation("Create User")

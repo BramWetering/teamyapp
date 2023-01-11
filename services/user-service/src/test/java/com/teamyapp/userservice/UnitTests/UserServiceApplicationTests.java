@@ -62,39 +62,39 @@ public class UserServiceApplicationTests {
     }
 
 
-//    @Test
-//    void contextLoads() {
-//        Assert.assertEquals("test", "test");
-//    }
+    @Test
+    void contextLoads() {
+        Assert.assertEquals("test", "test");
+    }
 
 
 
-//    @Test
-//    void getUserWithId() throws Exception {
-//
-//        // set data
-//        userRepository.save(user1);
-//
-//        // get the expected user
-//        User expectedUser = userService.getUserById(user1.getId());
-//
-//        // assert
-//        assertNotNull(user1);
-//        assertNotNull(expectedUser);
-//        assertEquals(user1.getId(), expectedUser.getId());
-//        assertEquals(user1.getName(), expectedUser.getName());
-//        assertEquals(user1.getEmail(), expectedUser.getEmail());
-//
-//    }
+    @Test
+    void getUserWithId() throws Exception {
 
-//    @Test
-//    void getInvalidMoodBoosterById() {
-//        user1.setId(null);
-//        // cancel incorrect mood booster
-//        Throwable exception = Assertions.assertThrows(IllegalArgumentException.class,
-//                () -> userService.getUserById(user1.getId()));
-//        assertEquals("The given id must not be null!", exception.getMessage());
-//    }
+        // set data
+        userRepository.save(user1);
+
+        // get the expected user
+        User expectedUser = userService.getUserById(user1.getId());
+
+        // assert
+        assertNotNull(user1);
+        assertNotNull(expectedUser);
+        assertEquals(user1.getId(), expectedUser.getId());
+        assertEquals(user1.getName(), expectedUser.getName());
+        assertEquals(user1.getEmail(), expectedUser.getEmail());
+
+    }
+
+    @Test
+    void getInvalidMoodBoosterById() {
+        user1.setId(null);
+        // cancel incorrect mood booster
+        Throwable exception = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> userService.getUserById(user1.getId()));
+        assertEquals("The given id must not be null!", exception.getMessage());
+    }
 }
 
 
