@@ -26,6 +26,6 @@ spring:
           audiences: 82b5a9e1-eaa2-4ee8-a3a0-7d3c41a4a1b5
   data:
     mongodb:
-      uri: mongodb+srv://root:3okKI5iGkWoznG7W@cluster0.tcj1n9o.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://root:root@cluster0.d8tyh7g.mongodb.net/?retryWrites=true&w=majority
       database: messages
       auto-index-creation: true
