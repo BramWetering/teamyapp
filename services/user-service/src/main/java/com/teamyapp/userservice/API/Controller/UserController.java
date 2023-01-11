@@ -1,11 +1,16 @@
 package com.teamyapp.userservice.API.Controller;
 
+import com.teamyapp.userservice.Domain.DTO.ChangeUsernameDto;
 import com.teamyapp.userservice.Domain.DTO.NewUserDTO;
 import com.teamyapp.userservice.Domain.Service.UserService;
 import com.teamyapp.userservice.Domain.Models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +21,7 @@ import java.util.List;
 
 @Api(tags = "User Controller")
 @RestController
+@Slf4j
 @CrossOrigin(origins = "*")
 @PreAuthorize("hasAuthority('SCOPE_User.All')")
 public class UserController {
@@ -32,13 +38,13 @@ public class UserController {
     @GetMapping(value = "/")
     public User getUser() {
 
-        return new User("1", "Test88 User", "Test@mail.com","password");
+        return new User("1", "Test88 User", "Test@mail.com");
     }
 
     @ApiOperation(value = "Get all users")
     @GetMapping(value = "/all")
     public List<User> getAllUsers() {
-
+        log.info("Gets all users");
         return this.service.getAllUsers();
     }
 
@@ -70,5 +76,24 @@ public class UserController {
         return service.getUserById(userId);
     }
 
+    @ApiOperation("Update User")
+    @PutMapping("/changeUsername")
+    public ResponseEntity<Object> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody ChangeUsernameDto dto) throws Exception {
+        Authentication authContext = SecurityContextHolder.getContext().getAuthentication();
 
+        User user = service.changeUserName(dto, authContext);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @ApiOperation("Create User")
+    @PostMapping("/new")
+    public ResponseEntity<Object> createUser(@RequestBody NewUserDTO dto) throws IllegalAccessException {
+        Authentication authContext = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.addUser(dto, authContext);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Failed to create user", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

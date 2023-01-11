@@ -95,6 +95,44 @@ spec:
 #      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
 #        - name: dockerconfigjson-github-com
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messageservice-deployment # Name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: messageservice-pod # The deployment will target pods with this name
+  template:
+    metadata:
+      labels:
+        app: messageservice-pod # Name of the pods
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "message-service"
+        dapr.io/app-port: "5002"
+    spec:
+      containers:
+        - name: messageservice-container # Name we want to give the container
+          image: docker.io/bram2709/teamapp:message-service # Remote Docker image
+          ports:
+            - containerPort: 5002 # Expose the port that the service/app runs on
+          imagePullPolicy: Always
+#          env:
+#            - name: CONNECTION_STRING
+#              valueFrom:
+#                secretKeyRef:
+#                  name: env-vars
+#                  key: CONNECTION_STRING
+#            - name: DB_NAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: env-vars
+#                  key: USER_DBNAME
+#      imagePullSecrets: # Token secret for pulling private Docker image from GitHub
+#        - name: dockerconfigjson-github-com
+---
 #
 #apiVersion: networking.k8s.io/v1
 #kind: Ingress
@@ -142,3 +180,18 @@ spec:
     - protocol: TCP
       port: 5001 # Port that we want to reach the service running on the pods on
       targetPort: 5001 # Port that the running service exposes within the container
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: messageservice-service # Name of the service
+spec:
+  type: ClusterIP
+  selector:
+    app: messageservice-pod # Send traffic to pods with this label
+  ports:
+    - protocol: TCP
+      port: 5002 # Port that we want to reach the service running on the pods on
+      targetPort: 5002 # Port that the running service exposes within the container

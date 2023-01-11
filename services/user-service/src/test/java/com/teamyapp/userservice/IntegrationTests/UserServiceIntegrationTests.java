@@ -48,12 +48,11 @@ public class UserServiceIntegrationTests {
         user1.setId("1");
         user1.setName("Test Name");
         user1.setEmail("Test Email");
-        user1.setPassword("Test PW");
+
 
         user2 = new User();
         user2.setName("Test2 Name");
         user2.setEmail("Test2 Email");
-        user2.setPassword("Test2 PW");
     }
 
 
@@ -71,13 +70,6 @@ public class UserServiceIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1));
 
-//        //Arrange
-//        Integer userCount = userRepository.findAll().size();
-//
-//        //Act/Assert
-//        mockMvc.perform(MockMvcRequestBuilders.get("/all"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(userCount)));
     }
 
     @Test
@@ -90,8 +82,7 @@ public class UserServiceIntegrationTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test Name"))
-                .andExpect(jsonPath("$.email").value("Test Email"))
-                .andExpect(jsonPath("$.password").value("Test PW"));
+                .andExpect(jsonPath("$.email").value("Test Email"));
 
     }
 

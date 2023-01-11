@@ -1,6 +1,5 @@
-package com.teamyapp.userservice.Domain.DTO;
+package com.teamyapp.messageservice.Domain.DTO;
 
-import com.bol.secure.Encrypted;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewUserDTO {
+public class ChangeUsernameDto {
+
     private String id;
     private String name;
-    @Encrypted
-    private String email;
 }
