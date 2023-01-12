@@ -65,4 +65,14 @@ public class MessageService {
 
         repository.saveAll(messages);
     }
+
+    public void deleteMessageById(String messageId) {
+        Optional<Message> foundMessage = repository.findById(messageId);
+        if (foundMessage.isEmpty())
+        {
+            //throw not found exception
+        }
+        Message message = foundMessage.get();
+        repository.delete(message);
+    }
 }

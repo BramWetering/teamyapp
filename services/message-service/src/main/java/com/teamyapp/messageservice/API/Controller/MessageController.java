@@ -70,4 +70,13 @@ public class MessageController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ApiOperation("delete message")
+    @DeleteMapping("/{messageId}}")
+    public ResponseEntity<HttpStatus> deleteMessage(@PathVariable String messageId) throws IllegalAccessException {
+        Authentication authContext = SecurityContextHolder.getContext().getAuthentication();
+
+        service.deleteMessageById(messageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
